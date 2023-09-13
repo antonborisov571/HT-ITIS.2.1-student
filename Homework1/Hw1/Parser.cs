@@ -29,6 +29,12 @@ public static class Parser
 
     private static CalculatorOperation ParseOperation(string arg)
     {
-        throw new InvalidOperationException();
+        switch (arg)
+        {
+            case "+":
+                return CalculatorOperation.Plus;
+            default:
+                throw new InvalidOperationException();
+        }
     }
 }
