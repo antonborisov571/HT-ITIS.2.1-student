@@ -35,6 +35,8 @@ public static class Parser
                 return CalculatorOperation.Plus;
             case "-":
                 return CalculatorOperation.Minus;
+            case "*":
+                return CalculatorOperation.Multiply;
             default:
                 throw new InvalidOperationException();
         }
