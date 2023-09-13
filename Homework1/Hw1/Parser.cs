@@ -7,13 +7,28 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        throw new NotImplementedException();
+        if (!IsArgLengthSupported(args))
+        {
+            throw new ArgumentException();
+        }
+
+        if (!double.TryParse(args[0], out val1))
+        {
+            throw new ArgumentException();
+        }
+
+        operation = ParseOperation(args[1]);
+
+        if (!double.TryParse(args[2], out val2))
+        {
+            throw new ArgumentException();
+        }
     }
 
     private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
 
     private static CalculatorOperation ParseOperation(string arg)
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException();
     }
 }
