@@ -29,18 +29,13 @@ public static class Parser
 
     private static CalculatorOperation ParseOperation(string arg)
     {
-        switch (arg)
+        return arg switch
         {
-            case "+":
-                return CalculatorOperation.Plus;
-            case "-":
-                return CalculatorOperation.Minus;
-            case "*":
-                return CalculatorOperation.Multiply;
-            case "/":
-                return CalculatorOperation.Divide;
-            default:
-                throw new InvalidOperationException("Entered incorrectly operation");
-        }
+            "+" => CalculatorOperation.Plus,
+            "-" => CalculatorOperation.Minus,
+            "*" => CalculatorOperation.Multiply,
+            "/" => CalculatorOperation.Divide,
+            _ => throw new InvalidOperationException("Entered incorrectly operation")
+        };
     }
 }
