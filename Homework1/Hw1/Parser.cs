@@ -9,19 +9,19 @@ public static class Parser
     {
         if (!IsArgLengthSupported(args))
         {
-            throw new ArgumentException();
+            throw new ArgumentException("Incorrect number of arguments entered");
         }
 
         if (!double.TryParse(args[0], out val1))
         {
-            throw new ArgumentException();
+            throw new ArgumentException("Incorrect first value entered");
         }
 
         operation = ParseOperation(args[1]);
 
         if (!double.TryParse(args[2], out val2))
         {
-            throw new ArgumentException();
+            throw new ArgumentException("incorrect second value entered");
         }
     }
 
@@ -40,7 +40,7 @@ public static class Parser
             case "/":
                 return CalculatorOperation.Divide;
             default:
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Entered incorrectly operation");
         }
     }
 }
