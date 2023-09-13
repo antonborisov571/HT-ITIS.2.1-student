@@ -3,7 +3,7 @@
 try
 {
     Parser.ParseCalcArguments(
-        Console.ReadLine()!.Split(' '), 
+        args, 
         out double arg1, 
         out CalculatorOperation operation, 
         out double arg2);
