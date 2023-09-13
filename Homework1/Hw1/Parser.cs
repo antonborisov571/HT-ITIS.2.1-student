@@ -37,6 +37,8 @@ public static class Parser
                 return CalculatorOperation.Minus;
             case "*":
                 return CalculatorOperation.Multiply;
+            case "/":
+                return CalculatorOperation.Divide;
             default:
                 throw new InvalidOperationException();
         }
