@@ -10,21 +10,21 @@
 	{
 		ldarg.0
 		call bool Hw2.Parser::IsArgLengthSupported(string[])
-		brfalse.s ArgumentCount
+		brfalse.s InvalidArgumentCount
 		
 		ldarg.0
 		ldc.i4.0
 		ldelem.ref
 		ldarg.1
 		call bool [System.Runtime]System.Double::TryParse(string, float64&)
-		brfalse.s ArgumentFirst
+		brfalse.s InvalidArgumentFirst
 		
 		ldarg.0
 		ldc.i4.2
 		ldelem.ref
 		ldarg.3
 		call bool [System.Runtime]System.Double::TryParse(string, float64&)
-		brfalse.s ArgumentSecond
+		brfalse.s InvalidArgumentSecond
 		
 		ldarg.2
 		ldarg.0
@@ -34,17 +34,17 @@
 		stind.i4  
 		br.s Ret
 		
-		ArgumentFirst:
+		InvalidArgumentFirst:
 		ldstr "Incorrect first value entered"
 		newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
 		throw
 		
-		ArgumentSecond:
+		InvalidArgumentSecond:
 		ldstr "Incorrect second value entered"
 		newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
 		throw
 		
-		ArgumentCount:
+		InvalidArgumentCount:
 		ldstr "Incorrect number of arguments entered"
 		newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
 		throw
