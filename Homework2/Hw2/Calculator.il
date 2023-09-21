@@ -4,7 +4,23 @@
 	.method static public float64 Calculate(float64 value1, valuetype Hw2.CalculatorOperation operation, float64 value2)
 	{
 		ldarg.1
-		switch (Plus, Minus, Multiply, Divide, Undefined)
+        ldc.i4.0
+        beq.s Plus
+        
+        ldarg.1
+        ldc.i4.1
+        beq.s Minus
+        
+        ldarg.1
+        ldc.i4.2
+        beq.s Multiply
+        
+        ldarg.1
+        ldc.i4.3
+        beq.s Divide
+		
+		newobj instance void [System.Runtime]System.InvalidOperationException::.ctor()
+		throw
 		
 		Plus:
 		ldarg.0
@@ -29,10 +45,6 @@
 		ldarg.2
 		div
 		br.s Ret
-		
-		Undefined:
-		newobj instance void [System.Runtime]System.InvalidOperationException::.ctor()
-		throw
 		
 		Ret:
 		ret
