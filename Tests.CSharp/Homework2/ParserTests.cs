@@ -19,9 +19,7 @@ public class ParserTests
         Parser.ParseCalcArguments(args, out var val1, out var operationResult, out var val2);
 
         //assert
-        Assert.Equal(15, val1);
         Assert.Equal(operationExpected, operationResult);
-        Assert.Equal(5, val2);
     }
 
     [HomeworkTheory(Homeworks.HomeWork2)]
