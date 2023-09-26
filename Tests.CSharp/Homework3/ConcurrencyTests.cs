@@ -79,9 +79,31 @@ public class ConcurrencyTests
             Assert.True(elapsedWithLock > elapsedWithInterlocked);
     }
 
+    [Homework(Homeworks.HomeWork3)]
     public void Semaphore()
     {
         // TODO: homework+
+        var delay = 1000;
+        var semaphore = new Semaphore(2, 2);
+        var listTasks = new Task[4];
+        for (int i = 0; i < 4; i++)
+        {
+            listTasks[i] = new Task(() =>
+            {
+                semaphore.WaitOne(delay + 100);
+                Thread.Sleep(delay);
+                semaphore.Release();
+            });
+        }
+        var sw = new Stopwatch();
+        sw.Start();
+        for (int i = 0; i < 4; i++)
+        {
+            listTasks[i].Start();
+        }
+        Task.WaitAll(listTasks);
+
+        Assert.True(sw.Elapsed.TotalMilliseconds >= delay * 2);
     }
 
     [Homework(Homeworks.HomeWork3)]
