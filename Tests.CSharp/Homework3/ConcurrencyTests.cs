@@ -25,7 +25,7 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void FiveThreads_100Iterations_RaceIsHardToReproduce()
     {
-        var expected = Concurrency.Increment(5, 1000);
+        var expected = Concurrency.Increment(5, 100);
         Assert.Equal(expected, Concurrency.Index);
     }
 
