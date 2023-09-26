@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Hw3.Mutex;
 using Tests.RunLogic.Attributes;
 using Xunit.Abstractions;
@@ -86,6 +87,7 @@ public class ConcurrencyTests
         var delay = 1000;
         var semaphore = new Semaphore(2, 2);
         var listTasks = new Task[4];
+
         for (int i = 0; i < 4; i++)
         {
             listTasks[i] = new Task(() =>
@@ -113,11 +115,37 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
+    [Homework(Homeworks.HomeWork3)]
     public void NamedSemaphore_InterprocessCommunication()
     {
         // TODO: homework+
         // https://learn.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim#named-semaphores
         // see mutex as example
+        var delay = 1000;
+        var p1 = new Task(() =>
+        {
+            var semaphore = new Semaphore(1, 1, "semaphore");
+            semaphore.WaitOne();
+            Thread.Sleep(delay);
+            semaphore.Release();
+        });
+
+        var p2 = new Task(() =>
+        {
+            Thread.Sleep(100);
+            var semaphore = System.Threading.Semaphore.OpenExisting("semaphore");
+            semaphore.WaitOne(delay + 100);
+            Thread.Sleep(delay);
+            semaphore.Release();
+        });
+
+        var sw = new Stopwatch();
+        sw.Start();
+        p1.Start();
+        p2.Start();
+        Task.WaitAll(p1, p2);
+
+        Assert.True(sw.Elapsed.TotalMilliseconds >= delay * 2);
     }
 
     [Homework(Homeworks.HomeWork3)]
