@@ -21,13 +21,20 @@ public class SingleInitializationSingleton
 
     public static SingleInitializationSingleton Instance => _instance.Value;
 
+
     internal static void Reset()
     {
+        if (_isInitialized)
+        {
             lock (Locker)
             {
-                _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
-                _isInitialized = false;
+                if (_isInitialized)
+                { 
+                    _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
+                    _isInitialized = false;
+                }
             }
+        }
     }
 
     public static void Initialize(int delay)
