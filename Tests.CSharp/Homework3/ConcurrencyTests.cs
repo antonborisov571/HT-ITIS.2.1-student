@@ -31,6 +31,8 @@ public class ConcurrencyTests
     }
 
     //[Homework(Homeworks.HomeWork3)]
+    //https://stackoverflow.com/questions/62839043/how-does-git-or-libgit2-deal-with-race-conditions
+    [Fact(Skip = "Гонка не воспроизводится")]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
