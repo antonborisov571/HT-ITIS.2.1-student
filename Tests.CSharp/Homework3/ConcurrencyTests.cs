@@ -31,8 +31,7 @@ public class ConcurrencyTests
     }
 
     //[Homework(Homeworks.HomeWork3)]
-    //https://stackoverflow.com/questions/62839043/how-does-git-or-libgit2-deal-with-race-conditions
-    [Fact(Skip = "Гонка не воспроизводится")]
+    [Fact(Skip = "The race is not replayed")]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
@@ -119,7 +118,7 @@ public class ConcurrencyTests
 
     //[Homework(Homeworks.HomeWork3)]
     //The named version of this synchronization primitive is not supported on this platform.
-    //Такую ошибку выводит GitHub.
+    //Outputs such an error GitHub.
     public void NamedSemaphore_InterprocessCommunication()
     {
         // TODO: homework+
