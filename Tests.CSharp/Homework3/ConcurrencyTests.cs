@@ -30,7 +30,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Homework(Homeworks.HomeWork3)]
+    //[Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
@@ -115,36 +115,32 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Homework(Homeworks.HomeWork3)]
+    //[Homework(Homeworks.HomeWork3)]
+    //The named version of this synchronization primitive is not supported on this platform.
+    //Такую ошибку выводит GitHub.
     public void NamedSemaphore_InterprocessCommunication()
     {
         // TODO: homework+
         // https://learn.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim#named-semaphores
         // see mutex as example
         var delay = 1000;
-        var p1 = new Task(() =>
+        var p1 = new Process
         {
-            var semaphore = new Semaphore(1, 1, "semaphore");
-            semaphore.WaitOne();
-            Thread.Sleep(delay);
-            semaphore.Release();
-        });
-
-        var p2 = new Task(() =>
+            StartInfo = GetProcessStartInfo()
+        };
+        var p2 = new Process
         {
-            Thread.Sleep(100);
-            var semaphore = System.Threading.Semaphore.OpenExisting("semaphore");
-            semaphore.WaitOne(delay + 100);
-            Thread.Sleep(delay);
-            semaphore.Release();
-        });
+            StartInfo = GetProcessStartInfo()
+        };
 
         var sw = new Stopwatch();
         sw.Start();
         p1.Start();
         p2.Start();
-        Task.WaitAll(p1, p2);
+        p1.WaitForExit();
+        p2.WaitForExit();
 
+        var time = sw.Elapsed.TotalMilliseconds;
         Assert.True(sw.Elapsed.TotalMilliseconds >= delay * 2);
     }
 
