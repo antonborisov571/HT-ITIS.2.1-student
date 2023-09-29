@@ -84,7 +84,6 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void Semaphore()
     {
-        // TODO: homework+
         var delay = 1000;
         var semaphore = new Semaphore(2, 2);
         var listTasks = new Task[4];
@@ -121,9 +120,6 @@ public class ConcurrencyTests
     //Outputs such an error GitHub.
     public void NamedSemaphore_InterprocessCommunication()
     {
-        // TODO: homework+
-        // https://learn.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim#named-semaphores
-        // see mutex as example
         var delay = 1000;
         var p1 = new Process
         {
