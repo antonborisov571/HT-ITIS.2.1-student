@@ -39,7 +39,11 @@ let ``anything but 0 / 0 = Infinity`` () =
     Assert.Equal(Double.PositiveInfinity, actual)
     
 [<Homework(Homeworks.HomeWork4)>]
-let ``0 / 0 = Exception`` () =
-    Assert.Throws<InvalidOperationException>(fun () -> calculate 0 CalculatorOperation.Undefined 0 |> ignore)
+let ``0 / 0 = NaN`` () =
+    //act 
+    let actual = calculate 0 CalculatorOperation.Divide 0
+    
+    //assert
+    Assert.Equal(Double.NaN, actual)
     
 
