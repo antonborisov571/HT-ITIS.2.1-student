@@ -24,13 +24,9 @@ let parseOperation (arg : string) =
 let parseCalcArguments(args : string[]) =
     if (isArgLengthSupported args <> true) then ArgumentException("Incorrect number of arguments entered") |> raise
 
-    match Double.TryParse args[0] with
-    | true, arg1 -> None |> ignore
-    | _ -> ArgumentException("Incorrect first value entered") |> raise
+    let (isConverted1, arg1) = Double.TryParse args[0]
+    let (isConverted2, arg2) = Double.TryParse args[2]
 
-    match Double.TryParse args[2] with
-    | true, arg2 -> None |> ignore
-    | _ -> ArgumentException("Incorrect second value entered") |> raise
-
-    let calc = {arg1 = Double.Parse args[0]; arg2 = Double.Parse args[2]; operation = parseOperation args[1]}
-    calc
+    match (isConverted1, isConverted2) with
+    | (true, true) -> {arg1 = arg1; arg2 = arg2; operation = parseOperation args[1]}
+    | _ -> ArgumentException("Incorrect first or second value entered") |> raise
