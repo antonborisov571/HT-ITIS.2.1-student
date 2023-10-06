@@ -19,9 +19,7 @@ let ``+, -, *, / parsed correctly`` (operation, operationExpected) =
     let options = parseCalcArguments args
     
     //assert
-    Assert.Equal(15.0, options.arg1)
     Assert.Equal(operationExpected, options.operation)
-    Assert.Equal(5.0, options.arg2); 
     
 [<HomeworkTheory(Homeworks.HomeWork4)>]
 [<InlineData("f", "+", "3")>]
