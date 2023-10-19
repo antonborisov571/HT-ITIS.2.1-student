@@ -23,22 +23,23 @@ let calculatorHandler: HttpHandler =
     fun next ctx ->
         let result: Result<string, string> = 
             let query = ctx.Request.Query
-            let args = [|
-                ctx.TryGetQueryStringValue("value1").Value ; 
-                ctx.TryGetQueryStringValue("operation").Value |> parseSign; 
-                ctx.TryGetQueryStringValue("value2").Value
-            |]
-
-            match Parser.parseCalcArguments args with 
-            | Ok (arg1, operation, arg2) -> Ok (string (Calculator.calculate arg1 operation arg2))
-            | Error errorValue -> 
-                match errorValue with
-                | Message.WrongArgFormatOperation -> Error $"Could not parse value '{args[1]}'"
-                | Message.WrongArgFormat -> 
-                    match Parser.parseDouble args[0] with 
-                    | Ok value -> Error $"Could not parse value '{args[2]}'"
-                    | _ -> Error $"Could not parse value '{args[0]}'"
-                | _ -> Ok "DivideByZero"
+            let value1 = ctx.GetQueryStringValue("value1")
+            let operation = ctx.GetQueryStringValue("operation")
+            let value2 = ctx.GetQueryStringValue("value2")
+            
+            match (value1, operation, value2) with 
+            | (Ok value1, Ok operation, Ok value2) ->
+                match Parser.parseCalcArguments [|value1; parseSign operation; value2|] with 
+                | Ok (arg1, op, arg2) -> Ok (string (Calculator.calculate arg1 op arg2))
+                | Error errorValue -> 
+                    match errorValue with
+                    | Message.WrongArgFormatOperation -> Error $"Could not parse value '{operation}'"
+                    | Message.WrongArgFormat -> 
+                        match Parser.parseDouble value1 with 
+                        | Ok value -> Error $"Could not parse value '{value2}'"
+                        | _ -> Error $"Could not parse value '{value1}'"
+                    | _ -> Ok "DivideByZero"
+            | _ -> Error "One parameter is not passed"
 
 
         match result with
