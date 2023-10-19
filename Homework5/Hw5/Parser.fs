@@ -1,6 +1,7 @@
 ﻿module Hw5.Parser
 
 open System
+open System.Globalization
 open Hw5.Calculator
 open Hw5.MaybeBuilder
 
@@ -18,8 +19,10 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
     | Calculator.divide -> Ok (arg1, CalculatorOperation.Divide, arg2)
     | _ -> Error Message.WrongArgFormatOperation
 
+
 let parseDouble (arg: string): Result<float, Message> =
-    match Double.TryParse arg with
+    let culture = CultureInfo("en-US")
+    match Double.TryParse(arg, NumberStyles.Any, culture) with
     | (true, value) -> Ok value
     | _ -> Error Message.WrongArgFormat
 
