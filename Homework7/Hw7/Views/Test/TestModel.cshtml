@@ -1,0 +1,9 @@
+﻿@using Hw7.MyHtmlServices
+@model Hw7.Models.ForTests.TestModel
+
+@using (Html.BeginForm())
+{
+    @Html.MyEditorForModel()
+    @*@Html.EditorForModel()*@
+    <button type="submit" class="btn btn-primary mt-2">Sign up</button>
+}
