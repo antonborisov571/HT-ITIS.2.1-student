@@ -25,16 +25,13 @@ public static class HtmlHelperExtensions
     public static IHtmlContent Division(PropertyInfo property, object model)
     {
         var html = new TagBuilder("div");
+        html.InnerHtml.AppendHtml(GetLabel(property));
+
         if (!property.PropertyType.IsEnum)
-        {
-            html.InnerHtml.AppendHtml(GetLabel(property));
             html.InnerHtml.AppendHtml(GetInput(property));
-        }
         else
-        {
-            html.InnerHtml.AppendHtml(GetLabel(property));
             html.InnerHtml.AppendHtml(GetSelect(property));
-        }
+
         html.InnerHtml.AppendHtml(Validate(property, model));
         return html;
     }
@@ -48,7 +45,7 @@ public static class HtmlHelperExtensions
             return html;
         }
 
-        var validationAttributes = property.GetCustomAttributes(typeof(ValidationAttribute), true);
+        var validationAttributes = property.GetCustomAttributes<ValidationAttribute>();
         
         foreach (ValidationAttribute validationAttribute in validationAttributes)
         {
@@ -64,17 +61,13 @@ public static class HtmlHelperExtensions
     private static IHtmlContent GetLabel(PropertyInfo property)
     {
         var html = new TagBuilder("label");
-        var display = property.GetCustomAttribute(typeof(DisplayAttribute)) != null
-            ? property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute
-            : null;
-        if (display == null || display.Name == null) 
-        {
+        var display = property.GetCustomAttribute<DisplayAttribute>();
+
+        if (display?.Name is null) 
             html.InnerHtml.AppendHtml(SeparateName(property.Name));
-        }
         else
-        {
             html.InnerHtml.AppendHtml(display.Name);
-        }
+
         html.Attributes.Add("for", property.Name);
         return html;
     }
