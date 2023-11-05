@@ -12,7 +12,35 @@ public class CalculatorController : Controller
         string operation,
         string val2)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (double.TryParse(val1, NumberStyles.Any, CultureInfo.InvariantCulture, out double value1)
+            && double.TryParse(val2, NumberStyles.Any, CultureInfo.InvariantCulture, out double value2))
+            {
+                switch (Enum.Parse(typeof(Operation), operation))
+                {
+                    case Operation.Plus:
+                        return calculator.Plus(value1, value2);
+                    case Operation.Minus:
+                        return calculator.Minus(value1, value2);
+                    case Operation.Multiply:
+                        return calculator.Multiply(value1, value2);
+                    case Operation.Divide:
+                        return calculator.Divide(value1, value2);
+                    default:
+                        return Content(Messages.InvalidOperationMessage);
+                }
+            }
+            return Content(Messages.InvalidNumberMessage);
+        }
+        catch (ArgumentException) 
+        {
+            return Content(Messages.InvalidOperationMessage);
+        }
+        catch
+        {
+            return Content(Messages.DivisionByZeroMessage);
+        }
     }
     
     [ExcludeFromCodeCoverage]
