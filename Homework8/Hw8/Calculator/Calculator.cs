@@ -2,13 +2,25 @@
 
 public class Calculator : ICalculator
 {
-    public double Divide(double firstValue, double secondValue)
+    public double Calculate(double val1, Operation operation, double val2)
     {
-        if (secondValue == 0)
+        return operation switch
+        {
+            Operation.Plus => Plus(val1, val2),
+            Operation.Minus => Minus(val1, val2),
+            Operation.Multiply => Multiply(val1, val2),
+            Operation.Divide => Divide(val1, val2),
+            _ => throw new InvalidOperationException()
+        };
+    }
+
+    public double Divide(double val1, double val2)
+    {
+        if (val2 == 0)
         {
             throw new InvalidOperationException(Messages.DivisionByZeroMessage);
         }
-        return firstValue / secondValue;
+        return val1 / val2;
     }
 
     public double Minus(double val1, double val2) =>
