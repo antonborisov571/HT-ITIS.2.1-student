@@ -10,7 +10,6 @@ public class Calculator : ICalculator
             Operation.Minus => Minus(val1, val2),
             Operation.Multiply => Multiply(val1, val2),
             Operation.Divide => Divide(val1, val2),
-            _ => throw new InvalidOperationException()
         };
     }
 
