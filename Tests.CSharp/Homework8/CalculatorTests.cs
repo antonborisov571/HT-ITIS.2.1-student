@@ -76,4 +76,32 @@ public class CalculatorTests
         //act + assert
         Assert.Throws<InvalidOperationException>(() => { calculator.Divide(1, 0); });
     }
+
+    [HomeworkTheory(Homeworks.HomeWork8)]
+    [InlineData(1, Operation.Plus, 2, 3)]
+    [InlineData(2, Operation.Minus, 1, 1)]
+    [InlineData(3, Operation.Multiply, 3, 9)]
+    [InlineData(20, Operation.Divide, 4, 5)]
+    public void Calculate_Operation(double val1, Operation operation, double val2, double expResult)
+    {
+        //arrange
+        ICalculator calculator = new Calculator();
+
+        //act
+        var actual = calculator.Calculate(val1, operation, val2);
+
+        //assert
+        Assert.Equal(actual, expResult);
+    }
+
+    [HomeworkTheory(Homeworks.HomeWork8)]
+    [InlineData(1, Operation.Invalid, 2, 3)]
+    public void Calculate_OperationInvalid(double val1, Operation operation, double val2, double expResult)
+    {
+        //arrange
+        ICalculator calculator = new Calculator();
+
+        //act + assert
+        Assert.Throws<InvalidOperationException>(() => calculator.Calculate(val1, operation, val2));
+    }
 }
