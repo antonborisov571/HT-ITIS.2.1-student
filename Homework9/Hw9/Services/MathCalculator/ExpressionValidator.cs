@@ -111,7 +111,7 @@ public class ExpressionValidator
             }
         }
 
-        if (stack.TryPeek(out var lastSymbol) && operations.Contains(lastSymbol))
+        if (operations.Contains(stack.Pop()))
         {
             errors.Add(MathErrorMessager.EndingWithOperation);
             return false;

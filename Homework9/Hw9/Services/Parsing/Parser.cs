@@ -74,7 +74,7 @@ public class Parser
         if (CheckNext(TokenType.LBracket))
         {
             var formula = Parse();
-            Expectation(TokenType.RBracket);
+            GetNext();
             return formula;
         }
         return ParseNumber();
@@ -83,7 +83,7 @@ public class Parser
     Expression ParseNumber()
     {
         return Expression.Constant(double.Parse(
-            Expectation(TokenType.Number).Value,
+            GetNext().Value,
             NumberStyles.AllowDecimalPoint,
             CultureInfo.InvariantCulture), 
             typeof(double)); 
@@ -104,8 +104,4 @@ public class Parser
         return true;
     }
 
-    Token Expectation(params TokenType[] tokens) =>
-        Check(tokens)
-        ? GetNext()
-        : throw new ArgumentException();
 }
