@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Hw9.Services.Tokens;
 
-public class Tokenizer
+public class Tokenizer : ITokenizer
 {
-    string Input { get; }
+    string Input { get; set; } = null!;
     int Position { get; set; } = 0;
 
     Dictionary<char, TokenType> tokenTypes = new()
@@ -18,26 +18,18 @@ public class Tokenizer
         [')'] = TokenType.RBracket,
     };
 
-    public Tokenizer(string input)
+    public List<Token> Tokenize(string expression)
     {
-        Input = string.Join("", input.Split(' '));
-    }
-
-    public List<Token> Tokenize()
-    {
+        Input = string.Join("", expression.Split(' '));
         var tokens = new List<Token>();
         while (!IsEnd())
         {
             var isFoundKey = false;
-            foreach (var (key, value) in tokenTypes)
-            {
-                if (Get(0) == key)
-                {
-                    tokens.Add(new Token(value, key.ToString()));
-                    isFoundKey = true;
-                    Position++;
-                    break;
-                }
+            if (tokenTypes.ContainsKey(Get(0)))
+            { 
+                tokens.Add(new Token(tokenTypes[Get(0)], Get(0).ToString()));
+                isFoundKey = true;
+                Position++;
             }
 
             if (!isFoundKey)
@@ -55,7 +47,6 @@ public class Tokenizer
     private Token TokenizeNumber()
     {
         var sb = new StringBuilder();
-        var isFoundDot = false;
         while (char.IsDigit(Get(0)) || Get(0) == '.')
         {
             sb.Append(Get(0));

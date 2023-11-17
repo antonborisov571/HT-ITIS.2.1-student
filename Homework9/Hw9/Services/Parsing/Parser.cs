@@ -4,17 +4,18 @@ using System.Linq.Expressions;
 
 namespace Hw9.Services.Parsing;
 
-public class Parser
+public class Parser : IParser
 {
-    List<Token> Tokens { get; }
+    List<Token> Tokens { get; set; } = null!;
     int Position { get; set; } = 0;
 
-    public Parser(List<Token> tokens)
+    public Expression Parse(IEnumerable<Token> tokens)
     {
-        Tokens = tokens;
+        Tokens = new List<Token>(tokens);
+        return ParseFormula();
     }
 
-    public Expression Parse()
+    Expression ParseFormula()
     {
         var leftOperand = ParseAddOrSubstract();
         return leftOperand;
@@ -73,7 +74,7 @@ public class Parser
     {
         if (CheckNext(TokenType.LBracket))
         {
-            var formula = Parse();
+            var formula = ParseFormula();
             GetNext();
             return formula;
         }

@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace Hw9.Services.MathCalculator;
+namespace Hw9.Services.Validator;
 
-public class ExpressionValidator 
+public class ExpressionValidator : IValidator
 {
     char[] operations = { '+', '-', '*', '/' };
     char[] brackets = { '(', ')' };

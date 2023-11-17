@@ -2,25 +2,37 @@ using Hw9.Dto;
 using Hw9.ErrorMessages;
 using Hw9.Services.Parsing;
 using Hw9.Services.Tokens;
-using System.ComponentModel.DataAnnotations;
+using Hw9.Services.Validator;
 using System.Globalization;
 using System.Linq.Expressions;
+
 
 namespace Hw9.Services.MathCalculator;
 
 public class MathCalculatorService : IMathCalculatorService
 {
+    private readonly IValidator _validator;
+    private readonly ITokenizer _tokenizer;
+    private readonly IParser _parser;
+
+    public MathCalculatorService(IValidator validator, ITokenizer tokenizer, IParser parser)
+    {
+        _validator = validator;
+        _tokenizer = tokenizer;
+        _parser = parser;
+    }
+
     public async Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression)
     {
-        var error = new ExpressionValidator().Validate(expression);
+        var error = _validator.Validate(expression);
         if (error is not null)
         {
             return new CalculationMathExpressionResultDto(error);
         }
 
-        var tokens = new Tokenizer(expression!).Tokenize();
+        var tokens = _tokenizer.Tokenize(expression!);
 
-        var expr = new Parser(tokens).Parse();
+        var expr = _parser.Parse(tokens);
 
         var exprVisitor = new CalculatorExpressionVisitor();
         var tree = exprVisitor.GetTree(expr);
@@ -36,7 +48,9 @@ public class MathCalculatorService : IMathCalculatorService
     {
         if (!tree.ContainsKey(current))
         {
-            return double.Parse(current.ToString(), CultureInfo.InvariantCulture);
+            return double.Parse(
+                current.ToString(),
+                CultureInfo.CurrentCulture);
         }
 
         var leftTask = Task.Run(async () =>
