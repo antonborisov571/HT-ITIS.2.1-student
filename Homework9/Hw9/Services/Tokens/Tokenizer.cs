@@ -24,20 +24,14 @@ public class Tokenizer : ITokenizer
         var tokens = new List<Token>();
         while (!IsEnd())
         {
-            var isFoundKey = false;
             if (tokenTypes.ContainsKey(Get(0)))
             { 
                 tokens.Add(new Token(tokenTypes[Get(0)], Get(0).ToString()));
-                isFoundKey = true;
                 Position++;
             }
-
-            if (!isFoundKey)
+            else
             {
-                if (char.IsDigit(Get(0)))
-                {
-                    tokens.Add(TokenizeNumber());
-                }
+                tokens.Add(TokenizeNumber()); 
             }
         }
 
