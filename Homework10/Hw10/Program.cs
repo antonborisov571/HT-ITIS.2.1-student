@@ -12,7 +12,7 @@ builder.Services
     .AddCachedMathCalculator();
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql("Host=localhost;Port=5432;Database=userdb;Username=postgres;Password=1234"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())

@@ -1,5 +1,4 @@
-﻿using Homework10.Migrations;
-using Hw10.DbModels;
+﻿using Hw10.DbModels;
 using Hw10.Dto;
 using Hw10.ErrorMessages;
 using Hw10.Services.Decorator;
@@ -32,14 +31,14 @@ public class MathCachedCalculatorService : CalculatorDecorator
 		var result = await base.CalculateMathExpressionAsync(expression);
 		if (!result.IsSuccess)
 			return result;
-		var count = _dbContext.SolvingExpressions.Count();
-		_dbContext.Add(new SolvingExpression()
+
+		await _dbContext.AddAsync(new SolvingExpression()
 		{
-			SolvingExpressionId = count + 1,
 			Expression = expression!,
 			Result = result.Result
 		});
 		await _dbContext.SaveChangesAsync();
+
 		return result;
     }
 }
