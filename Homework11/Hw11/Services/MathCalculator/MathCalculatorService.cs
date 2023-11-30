@@ -50,7 +50,7 @@ public class MathCalculatorService : IMathCalculatorService
                 CultureInfo.CurrentCulture);
         }
 
-        if (tree[current].Item2 is null)
+        if (current.NodeType is ExpressionType.Negate && tree[current].Item2 is null)
         {
             return -1 * await CalcAsync(tree[current].Item1, tree);
         }
