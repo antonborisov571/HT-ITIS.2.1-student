@@ -69,7 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework13", "Homework13", 
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ConsoleClient", "Homework6\ConsoleClient\ConsoleClient.fsproj", "{B0BED773-5FA1-43EB-B996-2FB6C16AF7D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoryCachedCalculator", "Homework13\Hw13.Calculator\MemoryCachedCalculator.csproj", "{9C5CFA5E-1915-4763-A7F8-6EFDF277ACF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoryCachedCalculator", "Homework13\MemoryCachedCalculator\MemoryCachedCalculator.csproj", "{9C5CFA5E-1915-4763-A7F8-6EFDF277ACF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -172,5 +172,8 @@ Global
 		{6B41684D-DEB8-49C2-A227-EC6A28A975F4} = {245E29C9-CF93-47FF-8788-34FBB6404AEA}
 		{B0BED773-5FA1-43EB-B996-2FB6C16AF7D8} = {AE1440FB-9A01-4A1C-8271-EF37A4FB668E}
 		{9C5CFA5E-1915-4763-A7F8-6EFDF277ACF9} = {245E29C9-CF93-47FF-8788-34FBB6404AEA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D85857C-2E75-460B-B7B8-548E4A7F0C4A}
 	EndGlobalSection
 EndGlobal

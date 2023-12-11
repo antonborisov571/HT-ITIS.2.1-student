@@ -7,6 +7,7 @@ using Xunit.Abstractions;
 namespace Tests.CSharp.Homework13;
 
 public class MemoryTest : IClassFixture<WebApplicationFactory<MemoryCachedCalculator.Program>>
+    // TODO: replace MemoryTest with the right generic argument
 {
     private readonly HttpClient _client;
     private readonly ITestOutputHelper _output;
