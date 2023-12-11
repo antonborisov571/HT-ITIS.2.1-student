@@ -57,12 +57,10 @@ public class MathCalculatorService : IMathCalculatorService
 
         var leftTask = Task.Run(async () =>
         {
-            await Task.Delay(1000);
             return await CalcAsync(tree[current].Item1, tree);
         });
         var rightTask = Task.Run(async () =>
         {
-            await Task.Delay(1000);
             return await CalcAsync(tree[current].Item2, tree);
         });
 
