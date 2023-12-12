@@ -6,13 +6,12 @@ using Xunit.Abstractions;
 
 namespace Tests.CSharp.Homework13;
 
-public class MemoryTest : IClassFixture<WebApplicationFactory<MemoryTest>>
-    // TODO: replace MemoryTest with the right generic argument
+public class MemoryTest : IClassFixture<WebApplicationFactory<MemoryCachedCalculator.Program>>
 {
     private readonly HttpClient _client;
     private readonly ITestOutputHelper _output;
 
-    public MemoryTest(WebApplicationFactory<MemoryTest> factory, ITestOutputHelper output)
+    public MemoryTest(WebApplicationFactory<MemoryCachedCalculator.Program> factory, ITestOutputHelper output)
     {
         _output = output;
         DotMemoryUnitTestOutput.SetOutputMethod(_output.WriteLine);
